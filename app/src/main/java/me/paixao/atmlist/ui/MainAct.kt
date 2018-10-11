@@ -1,6 +1,7 @@
-package me.paixao.atmlist
+package me.paixao.atmlist.ui
 
 import android.app.Activity
+import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -19,10 +20,12 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import me.paixao.atmlist.R
 
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
+class MainAct : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
+    private lateinit var viewModel: MainActViewModel
     private lateinit var mMap: GoogleMap
 
     inner class MyDrawerToggle(activity: Activity?,
@@ -46,6 +49,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        viewModel = ViewModelProvider.AndroidViewModelFactory(application).create(MainActViewModel::class.java)
+        viewModel.initViewModel()
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
