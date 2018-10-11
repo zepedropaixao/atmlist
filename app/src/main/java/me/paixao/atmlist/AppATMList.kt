@@ -5,6 +5,10 @@ import me.paixao.atmlist.di.AppModule
 import me.paixao.atmlist.di.DaggerNetComponent
 import me.paixao.atmlist.di.NetComponent
 import me.paixao.atmlist.di.NetModule
+import timber.log.Timber
+import timber.log.Timber.DebugTree
+
+
 
 class AppATMList : Application() {
 
@@ -19,6 +23,10 @@ class AppATMList : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(DebugTree())
+        }
 
         netComponent = DaggerNetComponent.builder()
                 // list of modules that are part of this component need to be created here too

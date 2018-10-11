@@ -1,9 +1,6 @@
 package me.paixao.atmlist.di
 
 import android.app.Application
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
-import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -22,19 +19,10 @@ import javax.inject.Singleton
 class NetModule// Constructor needs one parameter to instantiate.
 (var mBaseUrl: String) {
 
-    // Dagger will only look for methods annotated with @Provides
-    @Provides
-    @Singleton
-    fun providesSharedPreferences(application: Application):
-            // Application reference must come from AppModule.class
-            SharedPreferences {
-        return PreferenceManager.getDefaultSharedPreferences(application)
-    }
-
     @Provides
     @Singleton
     fun provideOkHttpCache(application: Application): Cache {
-        val cacheSize: Long = 10 * 1024 * 1024 // 10 MiB
+        val cacheSize: Long = 100 * 1024 * 1024 // 10 MiB
         return Cache(application.getCacheDir(), cacheSize)
     }
 
@@ -42,7 +30,7 @@ class NetModule// Constructor needs one parameter to instantiate.
     @Singleton
     fun provideGson(): Gson {
         val gsonBuilder = GsonBuilder()
-        gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        //gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         return gsonBuilder.create()
     }
 

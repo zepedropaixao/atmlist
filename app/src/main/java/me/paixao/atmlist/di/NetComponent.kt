@@ -9,7 +9,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [AppModule::class, NetModule::class])
 interface NetComponent {
-    fun inject(mrds: MainActViewModel)
+    fun inject(mavm: MainActViewModel)
 
     fun app(): Application
 
