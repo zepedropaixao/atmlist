@@ -8,6 +8,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
@@ -20,7 +21,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.nav_content_main.*
 import me.paixao.atmlist.R
+import me.paixao.atmlist.data.Atm
 
 
 class MainAct : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
@@ -50,8 +53,10 @@ class MainAct : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        setupRecyclerView()
+
         viewModel = ViewModelProvider.AndroidViewModelFactory(application).create(MainActViewModel::class.java)
-        viewModel.initViewModel()
+        viewModel.initViewModel(this)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -64,6 +69,28 @@ class MainAct : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+    }
+
+    lateinit var adapter: AtmListAdapter
+
+    fun setupRecyclerView() {
+
+        val layoutManager = LinearLayoutManager(this)
+        rv_atm.layoutManager = layoutManager
+        adapter = AtmListAdapter(mutableListOf())
+
+        /*disposables.add(adapter.getViewClickedObservable()
+                .subscribe({
+                    val intent = Intent(this, MovieDetailActivity::class.java)
+                    intent.putExtra("movie_id", it.id)
+                    startActivity(intent)
+                }))*/
+
+        rv_atm.adapter = adapter
+    }
+
+    fun addAtms(atms: List<Atm>) {
+        adapter.addAtms(atms)
     }
 
     override fun onBackPressed() {

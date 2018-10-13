@@ -25,7 +25,7 @@ class MainActViewModel: ViewModel() {
     }
 
 
-    fun initViewModel() {
+    fun initViewModel(act: MainAct) {
         // Do an asynchronous operation to fetch users.
         Timber.e("INITTING VM")
         val disp = apiService.get()
@@ -37,6 +37,7 @@ class MainActViewModel: ViewModel() {
                             for(item in it) {
                                 Timber.e("ATM: ${item.name}")
                             }
+                            act.addAtms(it)
                         },
                         Timber::e)
 

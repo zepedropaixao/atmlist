@@ -69,6 +69,11 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$daggerVersion" // if you use the support libraries
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
+    // Glide
+    implementation('com.github.bumptech.glide:glide:4.6.1') {
+        exclude group: "com.android.support"
+    }
+    kapt 'com.github.bumptech.glide:compiler:4.6.1'
 
     // Testing dependencies
     testImplementation 'junit:junit:4.12'

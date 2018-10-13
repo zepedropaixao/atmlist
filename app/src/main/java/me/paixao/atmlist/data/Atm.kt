@@ -12,5 +12,6 @@ data class Atm(
         val sonectId: String,
         val name: String,
         val latitude: String,
-        val longitude: String
+        val longitude: String,
+        val imagePath: String
 )
