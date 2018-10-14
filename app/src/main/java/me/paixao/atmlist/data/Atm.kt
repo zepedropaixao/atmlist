@@ -13,5 +13,6 @@ data class Atm(
         val name: String,
         val latitude: String,
         val longitude: String,
-        val imagePath: String
+        val imagePath: String,
+        var address: String
 )

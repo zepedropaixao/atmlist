@@ -45,8 +45,6 @@ class AtmListItemViewModel(val context: Context,
             if (s != null)
                 GlideApp.with(v.context)
                         .load(s)
-                        //.thumbnail(Glide.with(v.context).load(R.drawable.loader))
-                        // TODO add image for error
                         .centerCrop()
                         .into(v as ImageView)
         }

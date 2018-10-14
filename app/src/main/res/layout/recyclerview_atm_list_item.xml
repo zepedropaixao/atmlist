@@ -24,14 +24,28 @@
             android:adjustViewBounds="true"
             app:imagesrc="@{viewmodel.atm.imagePath}" />
 
-        <TextView
-            android:id="@+id/itemName"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/colorPrimaryDark"
-            android:text="@{viewmodel.atm.name}"/>
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/itemName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/colorPrimaryDark"
+                android:text="@{viewmodel.atm.name}"/>
+
+            <TextView
+                android:id="@+id/itemAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="@{viewmodel.atm.a}"/>
+        </LinearLayout>
+
 
     </LinearLayout>
 </layout>
