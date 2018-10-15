@@ -27,16 +27,11 @@ class MainActViewModel: ViewModel() {
 
     fun initViewModel(act: MainAct) {
         // Do an asynchronous operation to fetch users.
-        Timber.e("INITTING VM")
         val disp = apiService.get()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {
-                            Timber.e("I HAVE ANSWER")
-                            for(item in it) {
-                                Timber.e("ATM: ${item.name}")
-                            }
                             act.addAtms(it)
                         },
                         Timber::e)
