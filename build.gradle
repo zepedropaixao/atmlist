@@ -24,6 +24,7 @@ buildscript {
         roomVersion = "1.1.1"
         leakCanaryVersion = "1.5.4"
         daggerVersion="2.16"
+        materialDialogs="0.9.6.0"
 
         // Architecture Components dependencies
         archLifecycleVersion = "1.1.1"

@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -25,6 +26,7 @@ import kotlinx.android.synthetic.main.app_bar_main.toolbar
 import kotlinx.android.synthetic.main.nav_content_main.rv_atm
 import me.paixao.atmlist.R
 import me.paixao.atmlist.data.Atm
+import me.paixao.atmlist.utils.setDialogMessageAppearence
 import timber.log.Timber
 
 class MainAct : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
@@ -85,6 +87,12 @@ class MainAct : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
                 .subscribe({
                     drawer_layout.closeDrawer(GravityCompat.START)
                     moveCamera(it)
+
+                    MaterialDialog.Builder(this)
+                        .setDialogMessageAppearence()
+                        .title(getString(R.string.dialog_title, it.name))
+                        .neutralText(R.string.action_ok)
+                        .show()
                 }, Timber::e))
 
         rv_atm.adapter = adapter

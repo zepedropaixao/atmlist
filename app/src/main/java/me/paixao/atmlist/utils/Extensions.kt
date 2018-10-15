@@ -2,6 +2,7 @@ package me.paixao.atmlist.utils
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
+import android.graphics.Color
 import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.afollestad.materialdialogs.MaterialDialog
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
@@ -48,4 +50,11 @@ fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int){
 
 fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
     supportFragmentManager.inTransaction{replace(frameId, fragment)}
+}
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun MaterialDialog.Builder.setDialogMessageAppearence(): MaterialDialog.Builder {
+    this.backgroundColor(Color.WHITE)
+    this.titleColor(Color.BLACK)
+    return this
 }

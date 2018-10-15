@@ -44,6 +44,8 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
 
+    // Material Dialogs
+    implementation "com.afollestad.material-dialogs:core:$rootProject.materialDialogs"
 
     // Retrofit
     implementation('com.squareup.retrofit2:retrofit:2.3.0') {
@@ -55,7 +57,7 @@ dependencies {
 
     // RxJava
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
 
     // Retrofit adapter to RxJava and to GSON
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
