@@ -17,17 +17,19 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.nav_content_main.*
+import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.activity_main.drawer_layout
+import kotlinx.android.synthetic.main.activity_main.nav_view
+import kotlinx.android.synthetic.main.app_bar_main.toolbar
+import kotlinx.android.synthetic.main.nav_content_main.rv_atm
 import me.paixao.atmlist.R
 import me.paixao.atmlist.data.Atm
-
+import timber.log.Timber
 
 class MainAct : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
+    private val disposables = CompositeDisposable()
     private lateinit var viewModel: MainActViewModel
     private lateinit var mMap: GoogleMap
 
@@ -79,18 +81,20 @@ class MainAct : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
         rv_atm.layoutManager = layoutManager
         adapter = AtmListAdapter(mutableListOf())
 
-        /*disposables.add(adapter.getViewClickedObservable()
+        disposables.add(adapter.getViewClickedObservable()
                 .subscribe({
-                    val intent = Intent(this, MovieDetailActivity::class.java)
-                    intent.putExtra("movie_id", it.id)
-                    startActivity(intent)
-                }))*/
+                    drawer_layout.closeDrawer(GravityCompat.START)
+                    moveCamera(it)
+                }, Timber::e))
 
         rv_atm.adapter = adapter
     }
 
     fun addAtms(atms: List<Atm>) {
         adapter.addAtms(atms)
+        if(mapReady) {
+            addMarkers(atms)
+        }
     }
 
     override fun onBackPressed() {
@@ -144,6 +148,7 @@ class MainAct : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
         return true
     }
 
+    private var mapReady : Boolean = false
 
     /**
      * Manipulates the map once available.
@@ -156,10 +161,28 @@ class MainAct : AppCompatActivity(), NavigationView.OnNavigationItemSelectedList
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mapReady = true
+        addMarkers(adapter.atms)
+    }
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    fun addMarkers(atms: List<Atm>) {
+        if(atms.isNotEmpty()) {
+            for(atm in atms) addMarker(atm)
+            moveCamera(atms.last())
+        }
+    }
+
+    fun moveCamera(atm: Atm) {
+        val currentLocation = atm.getLatLng()
+        val cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLocation, 14f)
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation))
+        mMap.animateCamera(cameraUpdate)
+    }
+
+    fun addMarker(atm: Atm) = mMap.addMarker(MarkerOptions().position(atm.getLatLng()).title(atm.name))
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
     }
 }

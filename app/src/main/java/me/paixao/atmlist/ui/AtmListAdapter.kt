@@ -13,7 +13,7 @@ import me.paixao.atmlist.data.Atm
 import me.paixao.atmlist.utils.addAllIfNotIn
 
 
-class AtmListAdapter(private val atms: MutableList<Atm>) : RecyclerView.Adapter<AtmListAdapter.AtmViewHolder>() {
+class AtmListAdapter(val atms: MutableList<Atm>) : RecyclerView.Adapter<AtmListAdapter.AtmViewHolder>() {
 
     private val clickSubject = PublishSubject.create<Atm>()
 

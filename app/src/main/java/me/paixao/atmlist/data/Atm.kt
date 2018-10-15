@@ -2,6 +2,7 @@ package me.paixao.atmlist.data
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import com.google.android.gms.maps.model.LatLng
 
 /**
  * Immutable model class for a Atm.
@@ -15,4 +16,6 @@ data class Atm(
         var longitude: String = "",
         var imagePath: String = "",
         var address: String = ""
-)
+) {
+        fun getLatLng(): LatLng = LatLng(latitude.toDouble(), longitude.toDouble())
+}
