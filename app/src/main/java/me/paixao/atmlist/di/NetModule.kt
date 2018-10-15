@@ -6,6 +6,8 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import me.paixao.atmlist.BuildConfig
+import me.paixao.atmlist.comm.AtmTypeAdapter
+import me.paixao.atmlist.data.Atm
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -31,6 +33,7 @@ class NetModule// Constructor needs one parameter to instantiate.
     fun provideGson(): Gson {
         val gsonBuilder = GsonBuilder()
         //gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        gsonBuilder.registerTypeAdapter(Atm::class.java, AtmTypeAdapter())
         return gsonBuilder.create()
     }
 
